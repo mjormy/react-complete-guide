@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import classes from './App.css';
 import PersonsList from '../components/PersonsList/PersonsList';
-import Cockpit from '../components/Cockpit/Cockpit'
+import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 
 class App extends Component {
   constructor(props) {
@@ -90,7 +92,7 @@ class App extends Component {
 
 
     return (
-      <div className={classes.App}>
+      <Aux classes={classes.App}>
         <button onClick={() => {
           this.setState({showCockpit: false});
         }}>Remove Cockpit</button>
@@ -102,10 +104,10 @@ class App extends Component {
           clicked={this.togglePersonsHandler} />
         ) : null}
         {persons}
-      </div>
+      </Aux>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
 
-export default App;
+export default withClass(App, classes.app);
