@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 import Aux from '../../../hoc/Aux';
 import styled from 'styled-components';
 import classes from './Person.css';
+import withClass from '../../../hoc/withClass';
 
 class Person extends Component {
 
@@ -19,21 +21,43 @@ class Person extends Component {
 //     width: 450px;
 // }`;
 
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount(){
+        this.inputElementRef.current.focus();
+    }
+
     render(){
         console.log('[Person.js] Rendering a person');
         return (
-        <Fragment>
-            <p key="i1" onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>
+        <Aux>
+            {this.props.isAuth ? <p>Authenticated!</p> : <p>Please, log in</p>}
+            <p key="i1" onClick={this.props.click}>
+                I'm {this.props.name} and I am {this.props.age} years old!
+            </p>
             <p key="i2">{this.props.children}</p>
-            <input key="i3" type="text" 
-            onChange={this.props.changed} 
-            value={this.props.name}/>
-        </Fragment>
+            <input 
+                key="i3" 
+                ref={this.inputElementRef}
+                type="text" 
+                onChange={this.props.changed} 
+                value={this.props.name}
+            />
+        </Aux>
         
             // <div className="Person" style={style}>
         );
     }
 
 }
+
+Person.propTypes = {
+    click: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number
+};
 
 export default Person;
